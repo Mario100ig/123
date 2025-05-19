@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Malowania Customowe - ParadiseRP.eu</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(to right, #000000, #1a1a1a);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+        }
+
+        .packages-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .package-card {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .package-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .package-title {
+            font-size: 1.5rem;
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+
+        .package-price {
+            font-size: 1.8rem;
+            color: #2ecc71;
+            margin: 1rem 0;
+        }
+
+        .package-description {
+            color: #ecf0f1;
+            margin-bottom: 1rem;
+        }
+
+        .buy-button {
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .buy-button:hover {
+            background: linear-gradient(to right, #2980b9, #3498db);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .back-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #3498db;
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: scale(1.1);
+            background: #2980b9;
+        }
+
+        footer {
+            background: #000000;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            border-top: 3px solid #3498db;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Malowania Customowe</h1>
+        <p>Spersonalizuj swój pojazd z naszymi unikalnymi malowaniami</p>
+    </header>
+
+    <div class="packages-container">
+        <!-- Pakiet Basic -->
+        <div class="package-card">
+            <img src="https://cdn.discordapp.com/attachments/1346203041094832231/1368931306896887838/Zrzut_ekranu_2025-04-18_212551.png?ex=681a0421&is=6818b2a1&hm=5081b1d54f294d87b63f9ced4cf6797e930abb9b224ec279143471fb31a95b59&" 
+                 alt="Pakiet Basic Malowania" 
+                 class="package-image">
+            <h2 class="package-title">Pakiet Basic Malowania</h2>
+            <p class="package-description">
+                - 2 podstawowe malowania do wyboru<br>
+                - Podstawowa personalizacja kolorów<br>
+                - Wsparcie techniczne
+            </p>
+            <div class="package-price">15 PLN</div>
+            <button class="buy-button" onclick="window.location.href='https://discord.gg/mqfP4QG7'">Zamów Malowanie</button>
+        </div>
+
+        <!-- Pakiet Premium -->
+        <div class="package-card">
+            <img src="https://cdn.discordapp.com/attachments/1346203041094832231/1368931208246853763/Daddy_Tobacco.png?ex=681a0409&is=6818b289&hm=50495a11a2321799deb9cca0d30133bae2c07c7a322276d93b5610600b28fa35&" 
+                 alt="Pakiet Premium Malowania" 
+                 class="package-image">
+            <h2 class="package-title">Pakiet Premium Malowania</h2>
+            <p class="package-description">
+                - 5 zaawansowanych malowań<br>
+                - Pełna personalizacja kolorów<br>
+                - Własne napisy i numery<br>
+                - Priorytetowa realizacja
+            </p>
+            <div class="package-price">35 PLN</div>
+            <button class="buy-button" onclick="window.location.href='https://discord.gg/mqfP4QG7'">Zamów Malowanie</button>
+        </div>
+
+        <!-- Pakiet VIP -->
+        <div class="package-card">
+            <img src="https://cdn.discordapp.com/attachments/1346203041094832231/1368931194338672711/Balass.png?ex=681a0406&is=6818b286&hm=a9854797b6c4b37c7987217fc39d37b314d9cf948dabbb9a01fb295502fa64b1&" 
+                 alt="Pakiet VIP Malowania" 
+                 class="package-image">
+            <h2 class="package-title">Pakiet VIP Malowania</h2>
+            <p class="package-description">
+                - Nielimitowana liczba malowań<br>
+                - Własny projekt malowania<br>
+                - Animowane elementy<br>
+                - Ekspresowa realizacja
+            </p>
+            <div class="package-price">75 PLN</div>
+            <button class="buy-button" onclick="window.location.href='https://discord.gg/mqfP4QG7'">Zamów Malowanie</button>
+        </div>
+    </div>
+
+    <a href="/" class="back-button">↩</a>
+
+    <footer>
+        <p>© 2025 Samochody ParadiseRP.eu | Stworzone przez Mario_100ig</p>
+    </footer>
+</body>
+</html>
