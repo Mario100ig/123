@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Galeria ParadiseRP</title>
+  <meta name="description" content="Galeria zdjęć z serwera ParadiseRP. Zobacz screeny i wspomnienia społeczności RP.">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #232a3b;
+      color: #f3f6fa;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(90deg, #00ddff 0%, #ffe066 100%);
+      color: #232a3b;
+      padding: 2.2rem 0 1.2rem 0;
+      text-align: center;
+      border-bottom: 3px solid #ffe066;
+      box-shadow: 0 4px 24px #00ddff33;
+    }
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 0.7rem;
+      letter-spacing: 1px;
+      color: #232a3b;
+    }
+    .gallery-section {
+      background: rgba(0,0,0,0.18);
+      max-width: 900px;
+      margin: 2.5rem auto 2rem auto;
+      border-radius: 15px;
+      box-shadow: 0 0 24px #00ddff22;
+      padding: 2.2rem 1.5rem;
+      color: #f3f6fa;
+      text-align: center;
+      animation: fadeInUp 1.2s 0.5s both;
+    }
+    .gallery-section h2 {
+      color: #00ddff;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+      letter-spacing: 1px;
+      animation: popIn 1.1s 0.6s both;
+    }
+    .gallery-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .gallery-img {
+      width: 900px;
+      height: 580px;
+      object-fit: cover;
+      border-radius: 22px;
+      box-shadow: 0 10px 36px #00ddff77;
+      transition: transform 0.18s, box-shadow 0.18s;
+      cursor: pointer;
+      background: #232a3b;
+      animation: fadeInUp 0.7s both;
+    }
+    .gallery-img:hover {
+      transform: scale(1.14) rotate(-2deg);
+      box-shadow: 0 24px 64px #00ddffcc;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-top: 2.2rem;
+      background: #ffe066;
+      color: #232a3b;
+      border: 2px solid #00ddff;
+      border-radius: 30px;
+      padding: 0.7rem 1.7rem;
+      font-weight: 600;
+      font-size: 1.07rem;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s, box-shadow 0.18s, border 0.18s;
+      box-shadow: 0 2px 8px #00ddff33;
+    }
+    .back-btn:hover {
+      background: #00ddff;
+      color: #232a3b;
+      border: 2px solid #ffe066;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      80% { opacity: 1; transform: scale(1.08); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Galeria ParadiseRP</h1>
+  </header>
+  <main>
+    <section class="gallery-section">
+      <h2>Zdjęcia z serwera</h2>
+      <div class="gallery-grid">
+        <!-- Dodawaj zdjęcia ręcznie w Visual Studio poniżej -->
+        <img src="https://cdn.discordapp.com/attachments/1346203041094832231/1374319560823668839/Zrzut_ekranu_2025-05-05_135358.png?ex=682d9e54&is=682c4cd4&hm=d52f83a9d0bb8bf5ff43e5e66c7e7a6e7b631e8c42f4764f7f532ce65b63cc9d&" class="gallery-img" alt="ParadiseRP - screen 1" />
+        <img src="https://cdn.discordapp.com/attachments/1346203041094832231/1374319561721253919/Zrzut_ekranu_2025-04-17_010713.png?ex=682d9e55&is=682c4cd5&hm=231f2dfca61581240e9ac398fad048ae5105de957832daebb44dfc6439c14ad5&" class="gallery-img" alt="ParadiseRP - screen 2" />
+        <img src="https://cdn.discordapp.com/attachments/1346203041094832231/1374319562538876938/Zrzut_ekranu_2025-03-28_233714.png?ex=682d9e55&is=682c4cd5&hm=34591434dbf93544a2756077329bc950cb03a7741ef2bc69f17a7446fd114508&" class="gallery-img" alt="ParadiseRP - screen 3" />
+        <img src="https://cdn.discordapp.com/attachments/1346203041094832231/1374320451786113104/Zrzut_ekranu_2025-03-06_195946.png?ex=682d9f29&is=682c4da9&hm=434c862ccb0d0de11e589677d418a906394731b575a1171d373177f5bb37e59e&" class="gallery-img" alt="ParadiseRP - screen 4" />
+        <img src="https://cdn.discordapp.com/attachments/1346203041094832231/1374320451144257556/Zrzut_ekranu_2025-01-03_232004.png?ex=682d9f29&is=682c4da9&hm=9d751f65e8670277997b3b95233f3ead6353ac4f120c8922456e06966c85873c&" class="gallery-img" alt="ParadiseRP - screen 5" />
+        <!-- Dodaj kolejne zdjęcia tutaj -->
+      </div>
+      <a href="/index.html" class="back-btn">Powrót na stronę główną</a>
+    </section>
+  </main>
+  <script>
+      // Usunięto możliwość dodawania zdjęć przez użytkowników
+    </script>
+</body>
+</html>
