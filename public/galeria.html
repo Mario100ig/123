@@ -5,14 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Galeria ParadiseRP</title>
   <meta name="description" content="Galeria zdjęć z serwera ParadiseRP. Zobacz screeny i wspomnienia społeczności RP.">
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <style>
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
       background: #232a3b;
-      color: #f3f6fa;
+      color: #ffe066;
+      font-family: 'Segoe UI', Arial, sans-serif;
       margin: 0;
       padding: 0;
       min-height: 100vh;
+      /* Dodaj warstwę na animowane tło */
+    }
+    #animated-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+    main, header, footer, .gallery-section {
+      position: relative;
+      z-index: 1;
     }
     header {
       background: linear-gradient(90deg, #00ddff 0%, #ffe066 100%);
@@ -60,15 +73,17 @@
       height: 580px;
       object-fit: cover;
       border-radius: 22px;
-      box-shadow: 0 10px 36px #00ddff77;
+      box-shadow: 0 6px 18px #00ddff66, 0 0 8px #ffe06644;
       transition: transform 0.18s, box-shadow 0.18s;
       cursor: pointer;
       background: #232a3b;
-      animation: fadeInUp 0.7s both;
+      animation: galleryPopSoft 0.7s cubic-bezier(.4,0,.2,1);
+      filter: brightness(1.04) saturate(1.08);
     }
     .gallery-img:hover {
-      transform: scale(1.14) rotate(-2deg);
-      box-shadow: 0 24px 64px #00ddffcc;
+      transform: scale(1.06) rotate(-1.5deg);
+      box-shadow: 0 16px 32px #00ddff99, 0 0 24px #ffe06666;
+      filter: brightness(1.10) saturate(1.18);
     }
     .back-btn {
       display: inline-block;
@@ -89,6 +104,8 @@
       color: #232a3b;
       border: 2px solid #ffe066;
     }
+    /* Usuń lightbox */
+    .lightbox-overlay, .lightbox-img, .lightbox-close { display: none !important; }
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(40px); }
       to { opacity: 1; transform: translateY(0); }
@@ -98,9 +115,68 @@
       80% { opacity: 1; transform: scale(1.08); }
       100% { opacity: 1; transform: scale(1); }
     }
+    @keyframes galleryPopSoft {
+      0% { opacity: 0; transform: scale(0.92) rotate(-4deg); filter: blur(2px) brightness(0.9); }
+      60% { opacity: 1; transform: scale(1.04) rotate(1deg); filter: blur(0) brightness(1.08); }
+      100% { opacity: 1; transform: scale(1) rotate(0); filter: blur(0) brightness(1.04); }
+    }
+    @media (max-width: 1100px) {
+      .gallery-section {
+        max-width: 98vw;
+        padding: 1.2rem 0.5rem;
+      }
+      .gallery-img {
+        width: 98vw;
+        height: 38vw;
+        min-height: 220px;
+        max-width: 98vw;
+        max-height: 420px;
+      }
+    }
+    @media (max-width: 700px) {
+      .gallery-section {
+        max-width: 100vw;
+        padding: 0.7rem 0.1rem;
+      }
+      .gallery-grid {
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+      .gallery-img {
+        width: 98vw;
+        height: 54vw;
+        min-height: 120px;
+        max-height: 260px;
+        border-radius: 12px;
+      }
+      h1 {
+        font-size: 1.25rem;
+      }
+      .gallery-section h2 {
+        font-size: 1.05rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .gallery-img {
+        width: 98vw;
+        height: 60vw;
+        min-height: 80px;
+        max-height: 180px;
+      }
+      .gallery-section {
+        padding: 0.3rem 0.1rem;
+      }
+      .back-btn {
+        font-size: 0.95rem;
+        padding: 0.5rem 1.1rem;
+      }
+    }
   </style>
+  <!-- Bootstrap 5.3.3 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoA6DQD021o6Fz6b9UU6qdN0l1oW1L1q6U8z8a4KfAdVQSZe" crossorigin="anonymous"></script>
 </head>
 <body>
+  <canvas id="animated-bg"></canvas>
   <header>
     <h1>Galeria ParadiseRP</h1>
   </header>
@@ -114,13 +190,72 @@
         <img src="https://cdn.discordapp.com/attachments/1346203041094832231/1374319562538876938/Zrzut_ekranu_2025-03-28_233714.png?ex=682d9e55&is=682c4cd5&hm=34591434dbf93544a2756077329bc950cb03a7741ef2bc69f17a7446fd114508&" class="gallery-img" alt="ParadiseRP - screen 3" />
         <img src="https://cdn.discordapp.com/attachments/1346203041094832231/1374320451786113104/Zrzut_ekranu_2025-03-06_195946.png?ex=682d9f29&is=682c4da9&hm=434c862ccb0d0de11e589677d418a906394731b575a1171d373177f5bb37e59e&" class="gallery-img" alt="ParadiseRP - screen 4" />
         <img src="https://cdn.discordapp.com/attachments/1346203041094832231/1374320451144257556/Zrzut_ekranu_2025-01-03_232004.png?ex=682d9f29&is=682c4da9&hm=9d751f65e8670277997b3b95233f3ead6353ac4f120c8922456e06966c85873c&" class="gallery-img" alt="ParadiseRP - screen 5" />
+        <img src="https://cdn.discordapp.com/attachments/1346203041094832231/1374658234094190633/Zrzut_ekranu_2025-03-28_105653.png?ex=682ed9be&is=682d883e&hm=1613bb59c18dd22aaba5e24675df072d18c3f79f48d750dae4950f71ac5ef377&" class="gallery-img" alt="ParadiseRP - screen 6" />
         <!-- Dodaj kolejne zdjęcia tutaj -->
       </div>
       <a href="/index.html" class="back-btn">Powrót na stronę główną</a>
     </section>
   </main>
   <script>
-      // Usunięto możliwość dodawania zdjęć przez użytkowników
-    </script>
+    // Animowane tło - świetlne smugi
+    (function() {
+      const canvas = document.getElementById('animated-bg');
+      const ctx = canvas.getContext('2d');
+      let w = window.innerWidth;
+      let h = window.innerHeight;
+      let beams = [];
+      const BEAM_COUNT = 12;
+      function resize() {
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = w;
+        canvas.height = h;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+      function randomColor() {
+        const colors = ['#00ddff88', '#ffe06655', '#fff2', '#4a607355'];
+        return colors[Math.floor(Math.random()*colors.length)];
+      }
+      function createBeam() {
+        return {
+          x: Math.random()*w,
+          y: Math.random()*h,
+          w: Math.random()*w/2+120,
+          h: Math.random()*18+8,
+          dx: Math.random()*0.7+0.2,
+          color: randomColor(),
+          alpha: Math.random()*0.18+0.08
+        };
+      }
+      for(let i=0;i<BEAM_COUNT;i++) beams.push(createBeam());
+      function draw() {
+        ctx.clearRect(0,0,w,h);
+        for(let b of beams) {
+          ctx.save();
+          ctx.globalAlpha = b.alpha;
+          ctx.beginPath();
+          ctx.rect(b.x,b.y,b.w,b.h);
+          ctx.fillStyle = b.color;
+          ctx.shadowColor = b.color;
+          ctx.shadowBlur = 32;
+          ctx.fill();
+          ctx.restore();
+          b.x += b.dx;
+          if(b.x>w) {
+            b.x = -b.w;
+            b.y = Math.random()*h;
+            b.w = Math.random()*w/2+120;
+            b.h = Math.random()*18+8;
+            b.dx = Math.random()*0.7+0.2;
+            b.color = randomColor();
+            b.alpha = Math.random()*0.18+0.08;
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+  </script>
 </body>
 </html>

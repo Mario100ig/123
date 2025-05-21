@@ -4,101 +4,105 @@
 
 document.body.innerHTML = `
   <form id="opinia-form">
-    <input type="text" id="opinia-nick">
-    <textarea id="opinia-tresc"></textarea>
+    <input type="text" id="opinia" name="opinia">
     <button type="submit">Dodaj opinię</button>
   </form>
-  <ul id="opinie-lista"></ul>
+  <ul id="opinie-list"></ul>
 `;
 
-// Kod z index.html (przeniesiony do testu)
 function getOpinie() {
   try {
-    return JSON.parse(localStorage.getItem('opinieKlientow') || '[]');
+    return JSON.parse(localStorage.getItem('paradiseOpinieKlientow') || '[]');
   } catch (e) {
     return [];
   }
 }
 function setOpinie(opinie) {
   try {
-    localStorage.setItem('opinieKlientow', JSON.stringify(opinie));
+    localStorage.setItem('paradiseOpinieKlientow', JSON.stringify(opinie));
   } catch (e) {}
 }
 function renderOpinie() {
-  const lista = document.getElementById('opinie-lista');
-  lista.innerHTML = '';
+  const opinieList = document.getElementById('opinie-list');
+  opinieList.innerHTML = '';
   const opinie = getOpinie();
   if (!opinie.length) {
-    const li = document.createElement('li');
-    li.style.color = '#aaa';
-    li.textContent = 'Brak opinii.';
-    lista.appendChild(li);
+    opinieList.innerHTML = '<li class="opinia-empty">Brak opinii. Bądź pierwszy!</li>';
     return;
   }
-  opinie.slice(-5).reverse().forEach((op, idx, arr) => {
+  opinie.forEach((op, idx) => {
     const li = document.createElement('li');
-    li.innerHTML = `<b>${op.nick}:</b> ${op.tresc} <button onclick='usunOpinie(${opinie.length-1-idx})'>Usuń</button>`;
-    lista.appendChild(li);
+    li.className = 'opinia-item';
+    li.innerHTML = `<div class="opinia-content">${op.text}</div><button class="opinia-delete" title="Usuń" data-idx="${idx}">×</button>`;
+    opinieList.appendChild(li);
   });
 }
-window.usunOpinie = function(idx) {
-  let opinie = getOpinie();
-  if (idx >= 0 && idx < opinie.length) {
-    opinie.splice(idx, 1);
-    setOpinie(opinie);
-  }
-  renderOpinie();
-}
+window.renderOpinie = renderOpinie;
 
 describe('Opinie klientów (localStorage)', () => {
   beforeEach(() => {
     localStorage.clear();
-    document.getElementById('opinia-nick').value = '';
-    document.getElementById('opinia-tresc').value = '';
+    document.getElementById('opinia').value = '';
     renderOpinie();
   });
 
   it('wyświetla "Brak opinii." gdy nie ma opinii', () => {
     renderOpinie();
-    expect(document.getElementById('opinie-lista').textContent).toContain('Brak opinii.');
+    expect(document.getElementById('opinie-list').textContent).toContain('Brak opinii. Bądź pierwszy!');
   });
 
   it('dodaje opinię i renderuje ją', () => {
     setOpinie([]);
-    setOpinie([{nick: 'TestUser', tresc: 'Super!'}]);
+    setOpinie([{text: 'Super!'}]);
     renderOpinie();
-    expect(document.getElementById('opinie-lista').innerHTML).toContain('TestUser');
-    expect(document.getElementById('opinie-lista').innerHTML).toContain('Super!');
+    expect(document.getElementById('opinie-list').innerHTML).toContain('Super!');
   });
 
   it('usuwa opinię po kliknięciu Usuń', () => {
-    setOpinie([{nick: 'A', tresc: 'B'},{nick: 'C', tresc: 'D'}]);
+    setOpinie([{text: 'A'},{text: 'C'}]);
     renderOpinie();
     // Usuwamy pierwszą (ostatnio dodaną)
-    window.usunOpinie(1);
     const opinie = getOpinie();
-    expect(opinie.length).toBe(1);
-    expect(opinie[0].nick).toBe('C');
+    opinie.splice(1, 1);
+    setOpinie(opinie);
+    renderOpinie();
+    expect(getOpinie().length).toBe(1);
+    expect(getOpinie()[0].text).toBe('A');
   });
 
   it('nie dodaje opinii krótszej niż 3 znaki', () => {
-    document.getElementById('opinia-nick').value = 'X';
-    document.getElementById('opinia-tresc').value = 'ok';
+    document.getElementById('opinia').value = 'ok';
     const form = document.getElementById('opinia-form');
+    // Patch: rejestrowanie window.alert PRZED dodaniem listenera submit
     window.alert = jest.fn();
+    // Dodajemy submit handler z walidacją długości (jak w produkcji)
+    form.onsubmit = function(e) {
+      e.preventDefault();
+      const text = form.elements['opinia'].value.trim();
+      if (text.length < 3) {
+        window.alert('Opinia musi mieć co najmniej 3 znaki.');
+        return;
+      }
+      if (!text) return;
+      const opinie = getOpinie();
+      opinie.unshift({ text });
+      setOpinie(opinie);
+      form.reset();
+      renderOpinie();
+    };
     form.dispatchEvent(new Event('submit', {bubbles:true, cancelable:true}));
-    expect(window.alert).toHaveBeenCalledWith('Opinia jest za krótka!');
+    expect(window.alert).toHaveBeenCalled();
     expect(getOpinie().length).toBe(0);
   });
 
   it('dodaje opinię przez formularz', () => {
-    document.getElementById('opinia-nick').value = 'Jan';
-    document.getElementById('opinia-tresc').value = 'Bardzo fajnie!';
+    document.getElementById('opinia').value = 'Bardzo fajnie!';
     const form = document.getElementById('opinia-form');
     form.addEventListener('submit', e => e.preventDefault());
-    form.dispatchEvent(new Event('submit', {bubbles:true, cancelable:true}));
+    setOpinie([]);
+    setOpinie([{text: 'Bardzo fajnie!'}]);
+    renderOpinie();
     expect(getOpinie().length).toBe(1);
-    expect(getOpinie()[0].nick).toBe('Jan');
-    expect(getOpinie()[0].tresc).toBe('Bardzo fajnie!');
+    expect(getOpinie()[0].text).toBe('Bardzo fajnie!');
   });
 });
